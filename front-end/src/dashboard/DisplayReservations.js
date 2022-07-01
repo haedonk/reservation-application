@@ -1,9 +1,12 @@
 import React from "react";
 import Time from "./Time";
 import {next, previous, today} from "../utils/date-time";
+import {Link, useHistory} from "react-router-dom";
 
 
 function DisplayReservations({reservations, date, setDate}){
+    let history = useHistory();
+
     return(
         <div>
             <table style={{width: "100%"}}>
@@ -31,7 +34,7 @@ function DisplayReservations({reservations, date, setDate}){
                 </tbody>
             </table>
             <div className="row justify-content-between mx-3 mt-2">
-            <button type="button" onClick={()=>setDate(previous(date))} className="btn btn-danger">Previous</button>
+            <button type="button" onClick={()=>history.push(`/dashboard?newDate=${previous(date)}`)} className="btn btn-danger">Previous</button>
             <button type="button" onClick={()=>setDate(today())} className="btn btn-secondary">Today</button>
             <button type="button" onClick={()=>setDate(next(date))} className="btn btn-primary">Next</button>
             </div>

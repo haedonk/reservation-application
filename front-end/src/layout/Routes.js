@@ -25,7 +25,7 @@ function Routes() {
       <Route exact={true} path="/reservations/new">
         <NewReservation setDate={setDate} reservationsError={reservationsError} setReservationsError={setReservationsError}/>
       </Route>
-      <Route exact={true} path="/reservations">
+      <Route exact={true} path="/reservations" >
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">

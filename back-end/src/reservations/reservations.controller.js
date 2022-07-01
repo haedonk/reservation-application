@@ -2,6 +2,8 @@
  * List handler for reservation resources
  */
 
+const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
+
 const service = require("./reservations.service");
 
 async function list(req, res) {
@@ -17,5 +19,5 @@ async function create(req, res){
 
 module.exports = {
   list,
-  create,
+  create: asyncErrorBoundary(create),
 };

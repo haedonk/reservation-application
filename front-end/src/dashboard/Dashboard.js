@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import DisplayReservations from "./DisplayReservations"
+import { useLocation } from "react-router-dom";
 
 /**
  * Defines the dashboard page.
@@ -11,8 +12,14 @@ import DisplayReservations from "./DisplayReservations"
  */
 function Dashboard({ date, setDate, reservationsError, setReservationsError }) {
   const [reservations, setReservations] = useState([]);
+  const search = useLocation().search;
+  const newDate = new URLSearchParams(search).get("newDate");
+  console.log(newDate)
+  if(newDate){
+    setDate(newDate);
+  }
 
-  useEffect(loadDashboard, [date, setReservationsError]);
+  useEffect(loadDashboard, [date, setReservationsError, setDate, newDate]);
 
   function loadDashboard() {
     const abortController = new AbortController();
