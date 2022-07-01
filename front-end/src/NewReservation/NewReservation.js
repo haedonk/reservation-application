@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {Link, useHistory} from "react-router-dom";
 import { addReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import { today } from "../utils/date-time";
 
 
 
@@ -26,7 +27,15 @@ function NewReservation({reservationsError, setReservationsError}){
             ...formData,
             [target.name]: target.value,
         });
+        formValidation(formData);
     };
+
+    const formValidation = (formData) => {
+        if(formData.date < today()){
+            const err = new Error("Reservation date can not be a past date")
+        } 
+        console.log(today.getDay());
+    }
 
 
     const handleSubmit = (event) => {
