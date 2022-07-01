@@ -32,7 +32,6 @@ headers.append("Content-Type", "application/json");
 async function fetchJson(url, options, onCancel) {
   try {
     const response = await fetch(url, options);
-
     if (response.status === 204) {
       return null;
     }
@@ -46,7 +45,7 @@ async function fetchJson(url, options, onCancel) {
   } catch (error) {
     if (error.name !== "AbortError") {
       console.error(error.stack);
-      throw error;
+      throw error; 
     }
     return Promise.resolve(onCancel);
   }
@@ -66,4 +65,15 @@ export async function listReservations(params, signal) {
   return await fetchJson(url, { headers, signal }, [])
     .then(formatReservationDate)
     .then(formatReservationTime);
+}
+
+export async function addReservation(reservation, signal){
+  const url = new URL(`${API_BASE_URL}/reservations`);
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify(reservation),
+    signal,
+  };
+  return await fetchJson(url, options, {})
 }

@@ -6,11 +6,16 @@ const service = require("./reservations.service");
 
 async function list(req, res) {
   const {date} = req.query;
-  console.log(date)
   const data = await service.list(date);
-  res.json({data: data,});
+  res.json({data: data});
+}
+
+async function create(req, res){
+  const data = await service.create(req.body)
+  res.status(201).json({data: data});
 }
 
 module.exports = {
   list,
+  create,
 };

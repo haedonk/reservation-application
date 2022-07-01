@@ -9,11 +9,10 @@ import DisplayReservations from "./DisplayReservations"
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, setDate }) {
+function Dashboard({ date, setDate, reservationsError, setReservationsError }) {
   const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
 
-  useEffect(loadDashboard, [date]);
+  useEffect(loadDashboard, [date, setReservationsError]);
 
   function loadDashboard() {
     const abortController = new AbortController();
