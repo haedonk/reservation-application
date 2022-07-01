@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Link, useHistory} from "react-router-dom";
 import { addReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
@@ -6,7 +6,7 @@ import { today } from "../utils/date-time";
 
 
 
-function NewReservation({reservationsError, setReservationsError}){
+function NewReservation({reservationsError, setReservationsError, date}){
     let history = useHistory();
 
 
@@ -27,15 +27,28 @@ function NewReservation({reservationsError, setReservationsError}){
             ...formData,
             [target.name]: target.value,
         });
-        formValidation(formData);
     };
 
-    const formValidation = (formData) => {
-        if(formData.date < today()){
-            const err = new Error("Reservation date can not be a past date")
-        } 
-        console.log(today.getDay());
-    }
+
+    useEffect(() => {
+        const formValidation = (formData) => {
+            const day = new Date(formData.reservation_date).getDay();
+            let err = null;
+            if(formData.reservation_date < today()){
+                err = new Error("Reservation date can not be a past date")
+            } 
+            else if(day === 1){
+                err = new Error("Can not book reservation on day that we are not open")
+            }
+            setReservationsError(err);
+        }
+
+        if(formData.reservation_date !== ""){
+            formValidation(formData);
+        }
+
+
+    }, [formData, setReservationsError]);
 
 
     const handleSubmit = (event) => {
