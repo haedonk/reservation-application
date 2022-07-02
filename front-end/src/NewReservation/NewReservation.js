@@ -16,7 +16,7 @@ function NewReservation({reservationsError, setReservationsError, date}){
         mobile_number: "",
         reservation_date: "",
         reservation_time: "08:00",
-        people: ""
+        people: 0
     };
 
 
@@ -53,6 +53,7 @@ function NewReservation({reservationsError, setReservationsError, date}){
 
     const handleSubmit = (event) => {
         event.preventDefault();
+            formData.people = Number(formData.people);
             addReservation(formData)
             .then(result => history.push(`/dashboard?newDate=${formData.reservation_date}`))
             .catch(setReservationsError);

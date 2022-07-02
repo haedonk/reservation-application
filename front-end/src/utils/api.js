@@ -44,7 +44,6 @@ async function fetchJson(url, options, onCancel) {
     return payload.data;
   } catch (error) {
     if (error.name !== "AbortError") {
-      console.error(error.stack);
       throw error; 
     }
     return Promise.resolve(onCancel);
@@ -72,7 +71,7 @@ export async function addReservation(reservation, signal){
   const options = {
     method: "POST",
     headers,
-    body: JSON.stringify(reservation),
+    body: JSON.stringify({data: reservation}),
     signal,
   };
   return await fetchJson(url, options, {})

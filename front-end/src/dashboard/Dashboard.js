@@ -14,15 +14,15 @@ function Dashboard({ date, setDate, reservationsError, setReservationsError }) {
   const [reservations, setReservations] = useState([]);
   const search = useLocation().search;
   const newDate = new URLSearchParams(search).get("newDate");
-  console.log(newDate)
-  if(newDate){
-    setDate(newDate);
-  }
+
 
   useEffect(loadDashboard, [date, setReservationsError, setDate, newDate]);
 
   function loadDashboard() {
     const abortController = new AbortController();
+    if(newDate){
+      setDate(newDate);
+    }
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)

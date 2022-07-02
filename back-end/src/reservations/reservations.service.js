@@ -12,7 +12,7 @@ function create(reservation){
         .insert(reservation)
         .returning("*")
         .then(allReservations => allReservations[0])
-        .catch(error => error)
+        //.catch(error => error)
 }
 
 module.exports = {
