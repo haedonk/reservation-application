@@ -52,7 +52,7 @@ function validTime(req, res, next){
     }
   })
   const now = new Date().toString().slice(16, 21);
-  if(reservation_time < "10:30" || reservation_time > "21:30" || reservation_time < now){
+  if(reservation_time < "10:30" || reservation_time > "21:30" || reservation_time > now){
     return next({status: 400, message: `reservation_time`});
   }
   next();

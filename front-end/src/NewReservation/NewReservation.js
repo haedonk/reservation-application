@@ -31,7 +31,7 @@ function NewReservation({reservationsError, setReservationsError, date}){
 
 
     useEffect(() => {
-        const formValidation = (formData) => {
+        const dateValidation = (formData) => {
             const day = new Date(formData.reservation_date).getDay();
             let err = null;
             if(formData.reservation_date < today()){
@@ -44,19 +44,43 @@ function NewReservation({reservationsError, setReservationsError, date}){
         }
 
         if(formData.reservation_date !== ""){
-            formValidation(formData);
+            dateValidation(formData);
         }
-
-
     }, [formData, setReservationsError]);
+
+
+    const timeValidation = (formData) => {
+        const now = new Date().toString().slice(16, 21);
+        if(formData.reservation_time < "10:30" || formData.reservation_time > "21:30" || formData.reservation_time > now){
+            throw new Error("Invalid time: Can not be past time or outside of hours of operation");
+        }
+    }
+
+    const phoneValidation = (formData) => {
+        const num = formData.mobile_number;
+        let final;
+        if(!num.includes("-")){
+            const area = num.slice(0,3);
+            const middle = num.slice(3,6);
+            const last = num.slice(6,10);
+            final = ([area, middle, last]).join("-")
+            formData.mobile_number = final;
+        }
+    }
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        try{
+            timeValidation(formData);
+            phoneValidation(formData);
             formData.people = Number(formData.people);
             addReservation(formData)
             .then(result => history.push(`/dashboard?newDate=${formData.reservation_date}`))
             .catch(setReservationsError);
+        } catch (err){
+            setReservationsError(err);
+        }
       };
 
 
@@ -76,7 +100,7 @@ function NewReservation({reservationsError, setReservationsError, date}){
                 </div>
                 <div className="form-group col-4">
                     <label htmlFor="phone">Phone Number</label>
-                    <input type="tel" className="form-control" id="phone" name="mobile_number" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={handleChange} value={formData.mobile_number} required/>
+                    <input type="tel" className="form-control" id="phone" name="mobile_number" placeholder="123-456-7890" /*pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"*/ onChange={handleChange} value={formData.mobile_number} required/>
                     <div className="form-text" style={{ color: "gray" }}>Fomat: XXX-XXX-XXXX</div>
                 </div>
                 </div>
