@@ -22,20 +22,25 @@ async function create(req, res){
 
 function validDate(req, res, next){
   const reservation_date = res.locals.reservation.reservation_date;
-  const today = new Date();
-  const theDate = new Date(reservation_date);
-  if(theDate < today){
-    return next({status: 400, message: `future`});
-  } else if(new Date(reservation_date).getDay() === 1){
-    return next({status: 400, message: `closed`});
-  }
   const split = reservation_date.split("-");
   split.forEach(num => {
     if(!Number(num)){
       return next({status: 400, message: `reservation_date`});
     } 
   })
+  const today = asDateString(new Date());
+  if(reservation_date < today){
+    return next({status: 400, message: `future`});
+  } else if(new Date(reservation_date).getDay() === 1){
+    return next({status: 400, message: `closed`});
+  }
   next();
+}
+
+function asDateString(date) {
+  return `${date.getFullYear().toString(10)}-${(date.getMonth() + 1)
+    .toString(10)
+    .padStart(2, "0")}-${date.getDate().toString(10).padStart(2, "0")}`;
 }
 
 function validTime(req, res, next){
@@ -46,6 +51,10 @@ function validTime(req, res, next){
       return next({status: 400, message: `reservation_time`});
     }
   })
+  const now = new Date().toString().slice(16, 21);
+  if(reservation_time < "10:30" || reservation_time > "21:30" || reservation_time < now){
+    return next({status: 400, message: `reservation_time`});
+  }
   next();
 }
 
