@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-import DisplayReservations from "./DisplayReservations"
+import DisplayReservations from "./DisplayReservations";
+import DisplayTables from "./DisplayTables";
 import { useLocation } from "react-router-dom";
 
 /**
@@ -12,6 +13,8 @@ import { useLocation } from "react-router-dom";
  */
 function Dashboard({ date, setDate, reservationsError, setReservationsError }) {
   const [reservations, setReservations] = useState([]);
+  const [tables, setTables] = useState([]);
+
   const search = useLocation().search;
   const newDate = new URLSearchParams(search).get("newDate");
 
@@ -27,18 +30,25 @@ function Dashboard({ date, setDate, reservationsError, setReservationsError }) {
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
+    listTables(abortController.signal)
+      .then(setTables)
+      .catch(setReservations);
     return () => abortController.abort();
   }
+
 
 
   return (
     <main>
       <h1>Dashboard</h1>
+      <hr/>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
+        <h4 className="mb-0">Reservations for {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
       <DisplayReservations reservations={reservations} date={date} setDate={setDate}/>
+      <hr />
+      <DisplayTables tables={tables} />
     </main>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import Time from "./Time";
 import {next, previous, today} from "../utils/date-time";
-import {useHistory} from "react-router-dom";
+import {useHistory, Link} from "react-router-dom";
 
 
 function DisplayReservations({reservations, date, setDate}){
@@ -28,6 +28,7 @@ function DisplayReservations({reservations, date, setDate}){
                                     <td>{reserve.reservation_date}</td>
                                     <td><Time time={reserve.reservation_time}/></td>
                                     <td>{reserve.people}</td>
+                                    <td><Link to={`/reservations/${reserve.reservation_id}/seat`}><button type="button" className="btn btn-info">Seat</button></Link></td>
                                 </tr>
                         )
                     })}
