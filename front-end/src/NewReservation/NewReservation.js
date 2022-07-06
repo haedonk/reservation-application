@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {Link, useHistory} from "react-router-dom";
-import { addReservation } from "../utils/api";
+import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today } from "../utils/date-time";
 
@@ -38,7 +38,7 @@ function NewReservation({reservationsError, setReservationsError, date}){
                 err = new Error("Reservation date can not be a past date")
             } 
             else if(day === 1){
-                err = new Error("Can not book reservation on day that we are not open")
+                //err = new Error("Can not book reservation on day that we are not open")
             }
             setReservationsError(err);
         }
@@ -50,10 +50,15 @@ function NewReservation({reservationsError, setReservationsError, date}){
 
 
     const timeValidation = (formData) => {
-        const now = new Date().toString().slice(16, 21);
-        if(formData.reservation_time < "10:30" || formData.reservation_time > "21:30" || formData.reservation_time > now){
-            throw new Error("Invalid time: Can not be past time or outside of hours of operation");
-        }
+        const date = new Date();
+        const now = date.toString().slice(16,21);
+        if(today() === formData.reservation_date){
+            if(formData.reservation_time < "10:30" || formData.reservation_time > "21:30" || now > formData.reservation_time){
+                throw new Error("Must be in future and during hours of operation");
+            }
+          } else if(formData.reservation_time < "10:30" || formData.reservation_time > "21:30"){
+            throw new Error("Must be in future and during hours of operation 555")
+          }
     }
 
     const phoneValidation = (formData) => {
@@ -75,8 +80,8 @@ function NewReservation({reservationsError, setReservationsError, date}){
             timeValidation(formData);
             phoneValidation(formData);
             formData.people = Number(formData.people);
-            addReservation(formData)
-            .then(result => history.push(`/dashboard?newDate=${formData.reservation_date}`))
+            createReservation(formData)
+            .then(result => history.push(`/dashboard?date=${formData.reservation_date}`))
             .catch(setReservationsError);
         } catch (err){
             setReservationsError(err);

@@ -28,16 +28,16 @@ function DisplayReservations({reservations, date, setDate}){
                                     <td>{reserve.reservation_date}</td>
                                     <td><Time time={reserve.reservation_time}/></td>
                                     <td>{reserve.people}</td>
-                                    <td><Link to={`/reservations/${reserve.reservation_id}/seat`}><button type="button" className="btn btn-info">Seat</button></Link></td>
+                                    <td><Link href={`/reservations/${reserve.reservation_id}/seat`} to={`/reservations/${reserve.reservation_id}/seat`}><button type="button" className="btn btn-info">Seat</button></Link></td>
                                 </tr>
                         )
                     })}
                     </tbody>
                 </table>
                 <div className="row justify-content-between mx-3 mt-2">
-                <button type="button" onClick={()=>history.push(`/dashboard?newDate=${previous(date)}`)} className="btn btn-danger">Previous</button>
-                <button type="button" onClick={()=>history.push(`/dashboard?newDate=${today()}`)} className="btn btn-secondary">Today</button>
-                <button type="button" onClick={()=>history.push(`/dashboard?newDate=${next(date)}`)} className="btn btn-primary">Next</button>
+                <button type="button" onClick={()=>history.push(`/dashboard?date=${previous(date)}`)} className="btn btn-danger">Previous</button>
+                <button type="button" onClick={()=>history.push(`/dashboard?date=${today()}`)} className="btn btn-secondary">Today</button>
+                <button type="button" onClick={()=>history.push(`/dashboard?date=${next(date)}`)} className="btn btn-primary">Next</button>
                 </div>
             </div>
         )

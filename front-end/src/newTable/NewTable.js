@@ -1,9 +1,11 @@
 
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
+import { addTable } from "../utils/api";
 
 function NewTable({reservationsError, setReservationsError}){
+    const history = useHistory();
 
     const initialFormState = {
         table_name: "",
@@ -25,9 +27,9 @@ function NewTable({reservationsError, setReservationsError}){
         }
     }
 
-    const capValidation = (cap) => {
-        console.log(Number(cap) > 1)
-        if(Number(cap) < 1){
+    const capValidation = () => {
+        formData.capacity = Number(formData.capacity);
+        if(formData.capacity < 1){
             throw new Error("Capactiy must be at least 1")
         }
     }
@@ -36,8 +38,10 @@ function NewTable({reservationsError, setReservationsError}){
         event.preventDefault();
         try{
             tableValidation(formData.table_name);
-            capValidation(formData.capacity);
-            //api call
+            capValidation();
+            addTable(formData)
+                .then(() => history.push("/"))
+                .catch(err => setReservationsError(err));
         } catch (err){
             setReservationsError(err)
         }
@@ -61,7 +65,7 @@ function NewTable({reservationsError, setReservationsError}){
                     </div>
                 </div>
                 <div className="row d-flex justify-content-around col-8">
-                    <Link to={"/"}><button type="button" className="btn btn-secondary mr-2">Cancel</button></Link>
+                    <button type="button" onClick={() => history.goBack()} className="btn btn-secondary mr-2">Cancel</button>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </div>
             </form>

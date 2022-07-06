@@ -2,6 +2,10 @@ import React from "react";
 
 function DisplayTables({tables}){
 
+    function occupied(value){
+        if(value) return "occupied";
+        return "free"
+    }
 
 
     return(
@@ -19,6 +23,7 @@ function DisplayTables({tables}){
                                 <tr key={index}>
                                     <td>{table.table_name}</td>
                                     <td>{table.capacity}</td>
+                                    <td data-table-id-status={`${table.table_id}`}>{occupied(table.reservation_id)}</td>
                                 </tr>
                         )
                     })}

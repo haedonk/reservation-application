@@ -11,15 +11,15 @@ import { useLocation } from "react-router-dom";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, setDate, reservationsError, setReservationsError }) {
+function Dashboard({ date, setDate, reservationsError, setReservationsError, tables, setTables }) {
   const [reservations, setReservations] = useState([]);
-  const [tables, setTables] = useState([]);
+
 
   const search = useLocation().search;
-  const newDate = new URLSearchParams(search).get("newDate");
+  const newDate = new URLSearchParams(search).get("date");
 
 
-  useEffect(loadDashboard, [date, setReservationsError, setDate, newDate]);
+  useEffect(loadDashboard, [date, setReservationsError, setDate, newDate, setTables]);
 
   function loadDashboard() {
     const abortController = new AbortController();
@@ -32,7 +32,7 @@ function Dashboard({ date, setDate, reservationsError, setReservationsError }) {
       .catch(setReservationsError);
     listTables(abortController.signal)
       .then(setTables)
-      .catch(setReservations);
+      .catch(setReservationsError);
     return () => abortController.abort();
   }
 
