@@ -13,13 +13,14 @@ import { useLocation } from "react-router-dom";
  */
 function Dashboard({ date, setDate, reservationsError, setReservationsError, tables, setTables }) {
   const [reservations, setReservations] = useState([]);
+  const [upTable, setUpTable] = useState(0);
 
 
   const search = useLocation().search;
   const newDate = new URLSearchParams(search).get("date");
 
 
-  useEffect(loadDashboard, [date, setReservationsError, setDate, newDate, setTables]);
+  useEffect(loadDashboard, [date, setReservationsError, setDate, newDate, setTables, upTable]);
 
   function loadDashboard() {
     const abortController = new AbortController();
@@ -48,7 +49,7 @@ function Dashboard({ date, setDate, reservationsError, setReservationsError, tab
       <ErrorAlert error={reservationsError} />
       <DisplayReservations reservations={reservations} date={date} setDate={setDate}/>
       <hr />
-      <DisplayTables tables={tables} />
+      <DisplayTables tables={tables} setUpTable={setUpTable} upTable={upTable} setTables={setTables} />
     </main>
   );
 }

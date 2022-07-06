@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { freeTable, listTables } from "../utils/api";
 
-function DisplayTables({tables}){
+function DisplayTables({tables, setUpTable, upTable, setTables}){
 
     function occupied(value){
         if(value) return "occupied";
         return "free"
+    }
+
+    function finish (id){
+        if(window.confirm("Is this table ready to seat new guests? This cannot be undone.")){
+            freeTable(id);
+            setUpTable(id);
+        }
+    }
+
+    function displayButton(id, occupied){
+        if(occupied){
+            return(
+                <button type="button" 
+                onClick={()=>finish(id)} 
+                data-table-id-finish={id} 
+                className="btn btn-info">Finish</button>
+            )
+        }
+    }
+
+
+    useEffect(reloadTable,[setTables, upTable]);
+
+    function reloadTable(){
+        listTables()
+            .then(setTables)
     }
 
 
@@ -24,6 +51,7 @@ function DisplayTables({tables}){
                                     <td>{table.table_name}</td>
                                     <td>{table.capacity}</td>
                                     <td data-table-id-status={`${table.table_id}`}>{occupied(table.reservation_id)}</td>
+                                    <td>{displayButton(table.table_id, table.reservation_id)}</td>
                                 </tr>
                         )
                     })}

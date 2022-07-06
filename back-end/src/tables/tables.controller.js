@@ -22,6 +22,20 @@ async function update(req, res){
     res.json({data: updateData})
 }
 
+async function destroy(req, res, next){
+    // need to put a data {}
+    const table = await service.readTable(req.params.table_id);
+    if(!table) return next({ status: 404, message: `${table_id} not found` })
+    const reservation_id = table.reservation_id;
+    if(reservation_id) return next({ status: 404, message: `Not occupied` })
+    const removeReservation= {
+        ...table,
+        reservation_id: null
+    }
+    const updateTable = await service.update(removeReservation);
+    res.json({data: updateTable});
+}
+
 async function reservationExists(req, res, next){
     if(!req.body.data) return next({ status: 400, message: `Data is missing` })
     const { data = {} } = req.body;
@@ -87,5 +101,8 @@ module.exports = {
         isOccupied,
         compCap,
         update
+    ],
+    destroy: [
+        destroy
     ]
 }
