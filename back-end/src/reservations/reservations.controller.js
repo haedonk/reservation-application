@@ -19,6 +19,15 @@ async function create(req, res){
   res.status(201).json({data: data});
 }
 
+async function read(req, res, next){
+  const reservation = await service.read(req.params.reservation_id);
+  if(!reservation){
+    return next({status: 404, message: `Reservation ${req.params.reservation_id} not found`})
+  }
+  res.json({data : reservation})
+}
+
+
 
 function validDate(req, res, next){
   const reservation_date = res.locals.reservation.reservation_date;
@@ -51,9 +60,16 @@ function validTime(req, res, next){
       return next({status: 400, message: `reservation_time`});
     }
   })
-  const now = new Date().toString().slice(16, 21);
-  if(reservation_time < "10:30" || reservation_time > "21:30" || reservation_time > now){
-    return next({status: 400, message: `reservation_time`});
+
+  const date = new Date();
+  const now = date.toString().slice(16,21);
+
+  if(asDateString(date) === res.locals.reservation.reservation_date){
+    if(reservation_time < "10:30" || reservation_time > "21:30" || now > reservation_time){
+      return next({status: 400, message: `reservation_time`});
+    }
+  } else if(reservation_time < "10:30" || reservation_time > "21:30"){
+      return next({status: 400, message: `reservation_time`});
   }
   next();
 }
@@ -70,6 +86,7 @@ function validGroup(req, res, next){
 
 module.exports = {
   list,
+  read,
   create: [
     bodyDataHas("first_name"),
     bodyDataHas("last_name"),

@@ -8,7 +8,7 @@ function bodyDataHas(propertyName) {
           return next();
         }
       }
-      next({ status: 400, message: `Reservation must include a ${propertyName}` });
+      next({ status: 400, message: `Must include a ${propertyName}` });
     };
   }
 
