@@ -11,10 +11,9 @@ import { useLocation } from "react-router-dom";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, setDate, reservationsError, setReservationsError, tables, setTables }) {
+function Dashboard({ date, setDate, reservationsError, setReservationsError, tables, setTables, makeChange, setMakeChange }) {
   const [reservations, setReservations] = useState([]);
   const [upTable, setUpTable] = useState(0);
-
 
   const search = useLocation().search;
   const newDate = new URLSearchParams(search).get("date");

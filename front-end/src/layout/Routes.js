@@ -19,6 +19,7 @@ function Routes() {
   const [date, setDate] = useState(today());
   const [reservationsError, setReservationsError] = useState(null);
   const [tables, setTables] = useState([]);
+  const [makeChange, setMakeChange] = useState(0);
 
   return (
     <Switch>
@@ -29,13 +30,13 @@ function Routes() {
         <NewReservation setDate={setDate} reservationsError={reservationsError} setReservationsError={setReservationsError} date={date}/>
       </Route>
       <Route exact={true} path={"/reservations/:reservation_id/seat"} >
-        <SeatTable tables={tables} reservationsError={reservationsError} setReservationsError={setReservationsError} setTables={setTables}/>
+        <SeatTable tables={tables} reservationsError={reservationsError} setReservationsError={setReservationsError} setTables={setTables} setMakeChange={setMakeChange} makeChange={makeChange} />
       </Route>
       <Route exact={true} path="/reservations" >
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={date} setDate={setDate} reservationsError={reservationsError} setReservationsError={setReservationsError} tables={tables} setTables={setTables} />
+        <Dashboard date={date} setDate={setDate} reservationsError={reservationsError} setReservationsError={setReservationsError} tables={tables} setTables={setTables} setMakeChange={setMakeChange} makeChange={makeChange} />
       </Route>
       <Route path="/tables/new">
         <NewTable setReservationsError={setReservationsError} reservationsError={reservationsError}/>

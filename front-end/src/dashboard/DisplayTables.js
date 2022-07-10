@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { freeTable, listTables } from "../utils/api";
+import React from "react";
+import { freeTable } from "../utils/api";
 
 function DisplayTables({tables, setUpTable, upTable, setTables}){
 
@@ -10,12 +10,12 @@ function DisplayTables({tables, setUpTable, upTable, setTables}){
 
     function finish (id){
         if(window.confirm("Is this table ready to seat new guests? This cannot be undone.")){
-            freeTable(id);
-            setUpTable(id);
+            freeTable(id)
+                .then(() => setUpTable(upTable+1))
         }
     }
 
-    function displayButton(id, occupied){
+    function displayButton(id, occupied){ 
         if(occupied){
             return(
                 <button type="button" 
@@ -24,14 +24,6 @@ function DisplayTables({tables, setUpTable, upTable, setTables}){
                 className="btn btn-info">Finish</button>
             )
         }
-    }
-
-
-    useEffect(reloadTable,[setTables, upTable]);
-
-    function reloadTable(){
-        listTables()
-            .then(setTables)
     }
 
 

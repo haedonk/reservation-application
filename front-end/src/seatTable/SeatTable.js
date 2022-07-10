@@ -4,7 +4,7 @@ import { seatReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import {listTables} from "../utils/api";
 
-function SeatTable({tables, reservationsError, setReservationsError, setTables}){
+function SeatTable({tables, reservationsError, setReservationsError, setTables, setMakeChange, makeChange}){
     const history = useHistory();
 
     const {reservation_id} = useParams();

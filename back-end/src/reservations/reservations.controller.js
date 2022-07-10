@@ -28,6 +28,22 @@ async function read(req, res, next){
 }
 
 
+async function status(req, res, next){
+  const { data = {} } = req.body;
+  const reservation = await service.read(req.params.reservation_id);
+  if(!reservation){
+    return next({status: 404, message: `Reservation ${req.params.reservation_id} not found`})
+  }
+  if(reservation.status === "finished") return next({status: 400, message: `a finished reservation cannot be updated`});
+  if(data.status !== "finished" && data.status !== "seated" &&  data.status !== "booked") return next({status: 400, message: `unknown status`});
+  const updateReservation = {
+    ...reservation,
+    status: data.status,
+  }
+  const upData = await service.update(updateReservation);
+  res.json({data: upData})
+}
+
 
 function validDate(req, res, next){
   const reservation_date = res.locals.reservation.reservation_date;
@@ -84,6 +100,13 @@ function validGroup(req, res, next){
   next({status: 400, message: `people`})
 }
 
+function validStatus(req, res, next){
+  const status = res.locals.reservation.status;
+  if(status === "seated") return next({status: 400, message: `seated`})
+  if(status === "finished") return next({status: 400, message: `finished`})
+  next();
+}
+
 module.exports = {
   list,
   read,
@@ -97,6 +120,8 @@ module.exports = {
     validGroup,
     validDate,
     validTime,
+    validStatus,
     asyncErrorBoundary(create)
   ],
+  status
 };

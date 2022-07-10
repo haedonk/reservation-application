@@ -7,40 +7,55 @@ import {useHistory, Link} from "react-router-dom";
 function DisplayReservations({reservations, date, setDate}){
     let history = useHistory();
 
-        return(
-            <div>
-                <table style={{width: "100%"}}>
-                    <tbody>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Number</th>
-                        <th>Data</th>
-                        <th>Time</th>
-                        <th>Group</th>
-                    </tr>
-                    {reservations.map((reserve, index) => {
-                        return(
-                                <tr key={index}>
-                                    <td>{reserve.reservation_id}</td>
-                                    <td>{reserve.first_name} {reserve.last_name}</td>
-                                    <td>{reserve.mobile_number}</td>
-                                    <td>{reserve.reservation_date}</td>
-                                    <td><Time time={reserve.reservation_time}/></td>
-                                    <td>{reserve.people}</td>
-                                    <td><Link href={`/reservations/${reserve.reservation_id}/seat`} to={`/reservations/${reserve.reservation_id}/seat`}><button type="button" className="btn btn-info">Seat</button></Link></td>
-                                </tr>
-                        )
-                    })}
-                    </tbody>
-                </table>
-                <div className="row justify-content-between mx-3 mt-2">
-                <button type="button" onClick={()=>history.push(`/dashboard?date=${previous(date)}`)} className="btn btn-danger">Previous</button>
-                <button type="button" onClick={()=>history.push(`/dashboard?date=${today()}`)} className="btn btn-secondary">Today</button>
-                <button type="button" onClick={()=>history.push(`/dashboard?date=${next(date)}`)} className="btn btn-primary">Next</button>
-                </div>
-            </div>
+    function displaySeatButton(id, status){
+        if(status !== "booked") return "";
+        return (
+            <Link to={`/reservations/${id}/seat`}>
+                <button type="button" className="btn btn-info">Seat</button>
+            </Link>
         )
+    }
+
+
+
+    return(
+        <div>
+            <table style={{width: "100%"}}>
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Number</th>
+                    <th>Data</th>
+                    <th>Time</th>
+                    <th>Group</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                {reservations.map((reserve, index) => {
+                    if(reserve.status === "finished") return null;
+                    return(
+                            <tr key={index}>
+                                <td>{reserve.reservation_id}</td>
+                                <td>{reserve.first_name} {reserve.last_name}</td>
+                                <td>{reserve.mobile_number}</td>
+                                <td>{reserve.reservation_date}</td>
+                                <td><Time time={reserve.reservation_time}/></td>
+                                <td>{reserve.people}</td>
+                                <td data-reservation-id-status={`${reserve.reservation_id}`} >{reserve.status}</td>
+                                <td>{displaySeatButton(reserve.reservation_id, reserve.status)}</td>
+                            </tr>
+                    )
+                })}
+                </tbody>
+            </table>
+            <div className="row justify-content-between mx-3 mt-2">
+            <button type="button" onClick={()=>history.push(`/dashboard?date=${previous(date)}`)} className="btn btn-danger">Previous</button>
+            <button type="button" onClick={()=>history.push(`/dashboard?date=${today()}`)} className="btn btn-secondary">Today</button>
+            <button type="button" onClick={()=>history.push(`/dashboard?date=${next(date)}`)} className="btn btn-primary">Next</button>
+            </div>
+        </div>
+    )
 }
 
 export default DisplayReservations;

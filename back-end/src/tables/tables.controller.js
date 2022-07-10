@@ -13,26 +13,27 @@ async function create(req, res){
     res.status(201).json({data: data});
 }
 
-async function update(req, res){
+async function update(req, res, next){
+    if(res.locals.reservation.status === "seated") return next({ status: 400, message:`already seated`})
     const updateTable = {
         ...res.locals.table,
         reservation_id: res.locals.reservation.reservation_id
     }
-    const updateData = await service.update(updateTable);
+    const updateData = await service.updateChange(updateTable, res.locals.reservation.reservation_id);
     res.json({data: updateData})
 }
 
 async function destroy(req, res, next){
     // need to put a data {}
     const table = await service.readTable(req.params.table_id);
-    if(!table) return next({ status: 404, message: `${table_id} not found` })
+    if(!table) return next({ status: 404, message: `${req.params.table_id} not found` })
     const reservation_id = table.reservation_id;
-    if(reservation_id) return next({ status: 404, message: `Not occupied` })
+    if(!reservation_id) return next({ status: 400, message: `not occupied` })
     const removeReservation= {
         ...table,
         reservation_id: null
     }
-    const updateTable = await service.update(removeReservation);
+    const updateTable = await service.updateChange(removeReservation, reservation_id);
     res.json({data: updateTable});
 }
 
