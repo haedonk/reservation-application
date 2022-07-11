@@ -12,7 +12,7 @@ function DisplayReservations({reservations, date}){
 
     return(
         <div>
-            <table style={{width: "100%", emptyCells: "show"}}>
+            <table className="table table-sm table-dark table-striped" style={{width: "100%", emptyCells: "show"}}>
                 <tbody>
                 <tr>
                     <th>Name</th>

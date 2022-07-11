@@ -30,12 +30,13 @@ function DisplayTables({tables, setUpTable, upTable, setTables}){
     return(
         <div>
             <h4>Tables</h4>
-            <table style={{width: "100%"}}>
+            <table className="table table-sm table-dark table-striped" style={{width: "100%"}}>
                     <tbody>
                     <tr>
                         <th>Table Name</th>
                         <th>Capacity</th>
                         <th>Occupied</th>
+                        <th>Finish</th>
                     </tr>
                     {tables.map((table, index) => {
                         return(

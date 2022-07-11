@@ -48,13 +48,15 @@ function Search(){
         <div>
             <h2>Search</h2>
             <form onSubmit={handleSubmit} >
-                <div className="form-group">
-                    <label htmlFor="mobile_number">Mobile Number</label>
-                    <input type="text" className="form-control" id="mobile_number" name="mobile_number" placeholder="Enter a customer's phone number" value={number} onChange={handleChange} required/>
+                <div className="form-inline row mb-4">
+                    <label className="col-3 col-form-label" htmlFor="mobile_number">Mobile Number</label>
+                    <div className="col-9">
+                        <input type="text" className="form-control" id="mobile_number" name="mobile_number" placeholder="Enter a customer's phone number" value={number} onChange={handleChange} required/>
+                        <button type="submit" className="btn btn-primary btn-sm ml-sm-3">Find</button>
+                    </div>
                 </div>
-                <button type="submit" className="btn btn-primary">Find</button>
             </form>
-            <table style={{width: "100%"}}>
+            <table className="table table-sm table-dark table-striped" style={{width: "100%"}}>
                 <tbody>
                 <tr>
                     <th>Id</th>
@@ -64,6 +66,9 @@ function Search(){
                     <th>Time</th>
                     <th>Group</th>
                     <th>Status</th>
+                    <th>Seat</th>
+                    <th>Edit</th>
+                    <th>Cancel</th>
                 </tr>
                 {displayfind(finds)}
                 </tbody>
