@@ -4,6 +4,7 @@ import {formatAsTime} from "../utils/date-time";
 
 function Time({time}){
 
+    if(!time) return null;
     return (
         <>
         {formatAsTime(time)}

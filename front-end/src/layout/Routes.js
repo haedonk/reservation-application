@@ -4,9 +4,11 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
-import NewReservation from "../NewReservation/NewReservation";
+import NewReservation from "../Reservation/NewReservation";
 import NewTable from "../newTable/NewTable";
 import SeatTable from "../seatTable/SeatTable";
+import Search from "../search/Search";
+import EditReservation from "../Reservation/EditReservation";
 
 /**
  * Defines all the routes for the application.
@@ -27,7 +29,10 @@ function Routes() {
         <Redirect to={"/dashboard"} />
       </Route>
       <Route exact={true} path="/reservations/new">
-        <NewReservation setDate={setDate} reservationsError={reservationsError} setReservationsError={setReservationsError} date={date}/>
+        <NewReservation setDate={setDate} reservationsError={reservationsError} setReservationsError={setReservationsError} />
+      </Route>
+      <Route exact={true} path={"/reservations/:reservation_id/edit"} >
+        <EditReservation reservationsError={reservationsError} setReservationsError={setReservationsError} />
       </Route>
       <Route exact={true} path={"/reservations/:reservation_id/seat"} >
         <SeatTable tables={tables} reservationsError={reservationsError} setReservationsError={setReservationsError} setTables={setTables} setMakeChange={setMakeChange} makeChange={makeChange} />
@@ -40,6 +45,9 @@ function Routes() {
       </Route>
       <Route path="/tables/new">
         <NewTable setReservationsError={setReservationsError} reservationsError={reservationsError}/>
+      </Route>
+      <Route path={"/search"}>
+        <Search/>
       </Route>
       <Route>
         <NotFound />

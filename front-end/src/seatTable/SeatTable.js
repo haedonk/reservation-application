@@ -22,6 +22,7 @@ function SeatTable({tables, reservationsError, setReservationsError, setTables, 
               .catch(setReservationsError);
             return () => abortController.abort();
         }
+        return () => abortController.abort();
     }, [tables, setReservationsError, setTables])
 
 

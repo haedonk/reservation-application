@@ -105,11 +105,48 @@ export async function seatReservation({table_id, reservation_id}, signal){
 }
 
 export async function freeTable(table_id, signal){
-  //need to put a data {}
   const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
   const options = {
     method: "DELETE",
     headers,
+    signal,
+  }
+  return await fetchJson(url, options, {})
+}
+
+export async function searchNumber(number, signal){
+  const url = new URL(`${API_BASE_URL}/reservations?mobile_number=${number}`);
+  return await fetchJson(url, {headers, signal}, [])
+    .then(formatReservationDate)
+    .then(formatReservationTime)
+}
+
+export async function getReservation(id, signal){
+  const url = new URL(`${API_BASE_URL}/reservations/${id}`);
+  return await fetchJson(url, {headers, signal}, {})
+    .then(formatReservationDate)
+    .then(formatReservationTime)
+}
+
+export async function editReservation(reservation, signal){
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation.reservation_id}`);
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({data: reservation}),
+    signal,
+  }
+  return await fetchJson(url, options, {})
+    .then(formatReservationDate)
+    .then(formatReservationTime)
+}
+
+export async function cancelReservation(id, signal){
+  const url = new URL(`${API_BASE_URL}/reservations/${id}/status`);
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({data: {status: "cancelled"}}),
     signal,
   }
   return await fetchJson(url, options, {})
