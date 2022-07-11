@@ -8,6 +8,7 @@ knex.migrate
   .then((migrations) => {
     console.log("migrations", migrations);
     app.listen(PORT, listener);
+    console.log(PORT)
   })
   .catch((error) => {
     console.error(error);
