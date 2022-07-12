@@ -21,7 +21,6 @@ function create(reservation){
         .insert(reservation)
         .returning("*")
         .then(allReservations => allReservations[0])
-        //.catch(error => error)
 }
 
 function read(reservation_id){
