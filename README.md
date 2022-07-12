@@ -50,7 +50,7 @@ Have a look at the following examples:
 
 This is the homepage of the application.  You can view resevations and tables here.  You can move forward to the next or previous day by clicking the button, respectively.  You will have a table of all tables.  You have the ability to seat, edit, or cancel the reservation.  You also have the ability to finish the table.
 
-![Dashboard](https://gyazo.com/06bdd08ce71c86047f2342fab7a6cd8e)
+[![Image from Gyazo](https://i.gyazo.com/06bdd08ce71c86047f2342fab7a6cd8e.png)](https://gyazo.com/06bdd08ce71c86047f2342fab7a6cd8e)
 
 ###Search
 
