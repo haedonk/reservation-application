@@ -44,28 +44,28 @@ Have a look at the following examples:
 - `npm run test:3:backend` runs only the backend tests for user story 3.
 - `npm run test:3:frontend` runs only the frontend tests for user story 3.
 
-##Features
+## Features
 
-###Dashboard
+### Dashboard
 
 This is the homepage of the application.  You can view resevations and tables here.  You can move forward to the next or previous day by clicking the button, respectively.  You will have a table of all tables.  You have the ability to seat, edit, or cancel the reservation.  You also have the ability to finish the table.
 
 [![Image from Gyazo](https://i.gyazo.com/06bdd08ce71c86047f2342fab7a6cd8e.png)](https://gyazo.com/06bdd08ce71c86047f2342fab7a6cd8e)
 
-###Search
+### Search
 
 This page allows you to search reservations by phone number.  Each reservation has edit, seat, cancel options depending on the status.
 
 
 [![Image from Gyazo](https://i.gyazo.com/9e0a4d9cf206e9bfc1c9f24f1d0afb9c.png)](https://gyazo.com/9e0a4d9cf206e9bfc1c9f24f1d0afb9c)
 
-###New Reservation
+### New Reservation
 
 This page displays a form that allows you to add a new reservation.  Constricted to the validation provided by the restaurant.
 
 [![Image from Gyazo](https://i.gyazo.com/858f51bc72897d8b8b44131c39288f8f.png)](https://gyazo.com/858f51bc72897d8b8b44131c39288f8f)
 
-###New Table
+### New Table
 
 This page displays a form that allows you to add a new table.  Constricted to the validation provided by the restaurant.
 
