@@ -57,19 +57,19 @@ This is the homepage of the application.  You can view resevations and tables he
 This page allows you to search reservations by phone number.  Each reservation has edit, seat, cancel options depending on the status.
 
 
-![Search](https://gyazo.com/9e0a4d9cf206e9bfc1c9f24f1d0afb9c)
+[![Image from Gyazo](https://i.gyazo.com/9e0a4d9cf206e9bfc1c9f24f1d0afb9c.png)](https://gyazo.com/9e0a4d9cf206e9bfc1c9f24f1d0afb9c)
 
 ###New Reservation
 
 This page displays a form that allows you to add a new reservation.  Constricted to the validation provided by the restaurant.
 
-![NewReservation](https://gyazo.com/858f51bc72897d8b8b44131c39288f8f)
+[![Image from Gyazo](https://i.gyazo.com/858f51bc72897d8b8b44131c39288f8f.png)](https://gyazo.com/858f51bc72897d8b8b44131c39288f8f)
 
 ###New Table
 
 This page displays a form that allows you to add a new table.  Constricted to the validation provided by the restaurant.
 
-![NewTable](https://gyazo.com/8cbd8f7926a4f02ca5ed118a1121c071)
+[![Image from Gyazo](https://i.gyazo.com/8cbd8f7926a4f02ca5ed118a1121c071.png)](https://gyazo.com/8cbd8f7926a4f02ca5ed118a1121c071)
 
 
 ## API
