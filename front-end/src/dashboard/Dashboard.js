@@ -4,6 +4,7 @@ import ErrorAlert from "../layout/ErrorAlert";
 import DisplayReservations from "./DisplayReservations";
 import DisplayTables from "./DisplayTables";
 import { useLocation } from "react-router-dom";
+import { today } from "../utils/date-time";
 
 /**
  * Defines the dashboard page.
@@ -25,6 +26,8 @@ function Dashboard({ date, setDate, reservationsError, setReservationsError, tab
     const abortController = new AbortController();
     if(newDate){
       setDate(newDate);
+    } else {
+      setDate(today());
     }
     setReservationsError(null);
     listReservations({ date }, abortController.signal)

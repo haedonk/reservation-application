@@ -28,7 +28,7 @@ function DisplayReservations({reservations, date}){
                 {reservations.map((reserve, index) => {
                     if(reserve.status === "finished") return null;
                     return(
-                            <tr key={index}>
+                            <tr key={reserve.reservation_id}>
                                 <td>{reserve.first_name} {reserve.last_name}</td>
                                 <td>{reserve.mobile_number}</td>
                                 <td>{reserve.reservation_date}</td>

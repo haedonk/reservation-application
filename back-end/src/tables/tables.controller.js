@@ -1,5 +1,6 @@
 
 const bodyHas = require("../utils/bodyDataHas");
+const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 const service = require("./tables.service");
 
@@ -24,7 +25,6 @@ async function update(req, res, next){
 }
 
 async function destroy(req, res, next){
-    // need to put a data {}
     const table = await service.readTable(req.params.table_id);
     if(!table) return next({ status: 404, message: `${req.params.table_id} not found` })
     const reservation_id = table.reservation_id;
@@ -88,22 +88,24 @@ function compCap(req, res, next){
 
 
 module.exports = {
-    list,
+    list: [
+        asyncErrorBoundary(list)
+    ],
     create: [
         bodyHas("table_name"),
         bodyHas("capacity"),
         validCap,
         validName,
-        create
+        asyncErrorBoundary(create)
     ],
     update: [
         bodyHas("reservation_id"),
-        reservationExists,
-        isOccupied,
+        asyncErrorBoundary(reservationExists),
+        asyncErrorBoundary(isOccupied),
         compCap,
-        update
+        asyncErrorBoundary(update)
     ],
     destroy: [
-        destroy
+        asyncErrorBoundary(destroy)
     ]
 }

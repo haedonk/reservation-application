@@ -132,10 +132,12 @@ function validStatus(req, res, next){
 }
 
 module.exports = {
-  list,
+  list: [
+    asyncErrorBoundary(list)
+  ],
   read: [
-    validReservation,
-    read
+    asyncErrorBoundary(validReservation),
+    asyncErrorBoundary(read)
   ],
   create: [
     bodyDataHas("first_name"),
@@ -151,8 +153,8 @@ module.exports = {
     asyncErrorBoundary(create)
   ],
   status: [
-    validReservation,
-    status
+    asyncErrorBoundary(validReservation),
+    asyncErrorBoundary(status)
   ],
   update: [
     bodyDataHas("first_name"),
@@ -161,10 +163,10 @@ module.exports = {
     bodyDataHas("reservation_date"),
     bodyDataHas("reservation_time"),
     bodyDataHas("people"),
-    validReservation,
+    asyncErrorBoundary(validReservation),
     validGroup,
     validDate,
     validTime,
-    update,
+    asyncErrorBoundary(update),
   ]
 };

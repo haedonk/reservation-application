@@ -24,7 +24,7 @@ function Search(){
         if(finds.length !== 0) {
             return finds.map((reserve, index) => {
                 return (
-                    <tr key={index}>
+                    <tr key={reserve.reservation_id}>
                         <td>{reserve.reservation_id}</td>
                         <td>{reserve.first_name} {finds.last_name}</td>
                         <td>{reserve.mobile_number}</td>
