@@ -79,7 +79,7 @@ function validDate(req, res, next){
   const today = asDateString(new Date());
   if(reservation_date < today){
     return next({status: 400, message: `future`});
-  } else if(new Date(reservation_date).getDay() === 1){
+  } else if(new Date(reservation_date.replace("-", '/')).getDay() === 2){
     return next({status: 400, message: `closed`});
   }
   next();

@@ -32,7 +32,9 @@ function NewReservation({reservationsError, setReservationsError}){
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setReservationsError(null);
         try{
+            console.log(formData.reservation_date)
             phoneValidation(formData);
             dateValidation(formData);
             timeValidation(formData);

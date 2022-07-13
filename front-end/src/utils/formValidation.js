@@ -3,11 +3,11 @@ import { today } from "./date-time";
 
 
 export function dateValidation(formData) {
-    const day = new Date(formData.reservation_date).getDay();
+    const day = new Date(formData.reservation_date.replace("-", '/')).getDay();
     if(formData.reservation_date < today()){
         throw new Error("Reservation date can not be a past date")
     } 
-    else if(day === 1){
+    else if(day === 2){
         throw new Error("Can not book reservation on day that we are not open")
     }
 }
